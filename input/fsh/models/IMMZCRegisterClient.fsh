@@ -26,7 +26,7 @@ Description:  "Data elements for the IMMZ.C Register Client Data Dictionary."
 * sex 1..1 code "Sex" "Documentation of a specific instance of sex information for the client"
   * ^code[+] = IMMZ.C#DE5
 * sex from IMMZ.C.DE5 (required)
-* address 0..* "Addresss" "Client's address"
+* address 0..* string "Addresss" "Client's address"
   * ^code[+] = IMMZ.C#DE21
 * birthDate 0..1 date "Date of birth" "Client's date of birth (DOB) if known; if unknown, use assigned DOB for administrative purposes"
   * ^code[+] = IMMZ.C#DE10
