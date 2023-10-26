@@ -47,9 +47,9 @@ Description:  "Data elements for the IMMZ.C Register Client Data Dictionary."
   * ^code[+] = IMMZ.C#DE20*/
   
 
- Mapping:      IMMZ-C-to-Patient
- Source:       IMMZCRegisterClient
- Target:       "Patient"
+ Mapping: IMMZ-C-to-Patient
+ Source: IMMZCRegisterClient
+ Target: "Patient"
  * -> "Patient"
  * uniqueId -> "Patient.identifier.value"
  //* name -> "Patient.name.text"
