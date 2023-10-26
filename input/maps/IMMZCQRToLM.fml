@@ -10,8 +10,9 @@ group QRespToIMMZC ( source qr : QResp, target immzc : IMMZC) {
       answer.value as content -> immzc.uniqueId = content  "SetIdentifier";
     } "FirstAnswerForIdentifier";
 
-    item as pFirstName where item.linkId = 'firstName' then NameToIMMZC( pFirstName, immzc ) "SetNames";
-    item as pSurname where item.linkId = 'surname' then NameToIMMZC( pSurname, immzc ) "SetNames";
+    //item as pFirstName where item.linkId = 'firstName' then NameToIMMZC( pFirstName, immzc ) "SetFirstName";
+    //item as pSurname where item.linkId = 'surname' then NameToIMMZC( pSurname, immzc ) "SetSurname";
+    item as pName where item.linkId = 'name' then NameToIMMZC( pName, immzc ) "SetNames";
   
 
     item.answer first as answer where item.linkId = 'sex' then {
@@ -35,12 +36,12 @@ group QRespToIMMZC ( source qr : QResp, target immzc : IMMZC) {
        answer.value as content -> immzc.phone = content  "SetPhone";
      } "FirstAnswerForPhone";
 
-    item.answer first as answer where item.linkId = 'administrativeArea' then {
+    /*item.answer first as answer where item.linkId = 'administrativeArea' then {
       answer.value as coding -> immzc.administrativeArea as area then {
         coding -> area.coding = coding "SetCodingValue";
         coding.display as display -> area.text = display "SetDisplay";
       } "SetCoding";
-    } "FirstAnswerForAdministrativeArea";
+    } "FirstAnswerForAdministrativeArea";*/
 
     /*item.answer first as answer where item.linkId = 'healthWorker' then {
       answer.value as content -> immzc.healthWorker = content  "SetHealthWorker";
@@ -53,17 +54,21 @@ group QRespToIMMZC ( source qr : QResp, target immzc : IMMZC) {
 group NameToIMMZC( source name, target immzc) {
   name.item as item then {
 
-    /*item.answer first as answer where item.linkId = 'fullName' then {
-      answer.value as content -> immzc.name = content "SetFullName";
-    } "FirstAnswerForFullName";*/
+    item.answer first as answer where item.linkId = 'firstName' then {
+      answer.value as firstName -> firstName then {
+        item.answer first as answers where item.linkId = 'surname' then {
+          answer2.value as surname -> immzc.name = append(firstName, " ", surname) "SetName";
+          } "set";
+        } "set";
+    } "FirstAnswerForFullName";
 
     item.answer first as answer where item.linkId = 'firstName' then {
       answer.value as content -> immzc.firstName = content "SetFirstName";
     } "FirstAnswerForFirstName";
 
     item.answer first as answer where item.linkId = 'surname' then {
-     answer.value as content -> immzc.surname = content "SetFamilyName";
-    } "FirstAnswerForFamilyName";
+     answer.value as content -> immzc.surname = content "SetSurname";
+    } "FirstAnswerForSurname";
 
   } "processNameItems";
 }
