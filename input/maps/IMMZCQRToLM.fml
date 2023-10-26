@@ -10,9 +10,9 @@ group QRespToIMMZC ( source qr : QResp, target immzc : IMMZC) {
       answer.value as content -> immzc.uniqueId = content  "SetIdentifier";
     } "FirstAnswerForIdentifier";
 
-    //item as pFirstName where item.linkId = 'firstName' then NameToIMMZC( pFirstName, immzc ) "SetFirstName";
-    //item as pSurname where item.linkId = 'surname' then NameToIMMZC( pSurname, immzc ) "SetSurname";
-    item as pName where item.linkId = 'name' then NameToIMMZC( pName, immzc ) "SetNames";
+    item as pFirstName where item.linkId = 'firstName' then NameToIMMZC( pFirstName, immzc ) "SetFirstName";
+    item as pSurname where item.linkId = 'surname' then NameToIMMZC( pSurname, immzc ) "SetSurname";
+    item as pName where item.linkId = 'name' then NameToIMMZC( pName, immzc ) "SetFullNames";
   
 
     item.answer first as answer where item.linkId = 'sex' then {
@@ -54,21 +54,28 @@ group QRespToIMMZC ( source qr : QResp, target immzc : IMMZC) {
 group NameToIMMZC( source name, target immzc) {
   name.item as item then {
 
-    item.answer first as answer where item.linkId = 'firstName' then {
-      answer.value as firstName -> firstName then {
-        item.answer first as answers where item.linkId = 'surname' then {
-          answer2.value as surname -> immzc.name = append(firstName, " ", surname) "SetName";
+    if (name == pName)
+    {
+      item.answer first as answer where item.linkId = 'firstName' then {
+        answer.value as firstName -> firstName then {
+          item.answer first as answers where item.linkId = 'surname' then {
+            answer2.value as surname -> immzc.name = append(firstName, " ", surname) "SetName";
+            } "set";
           } "set";
-        } "set";
-    } "FirstAnswerForFullName";
-
-    item.answer first as answer where item.linkId = 'firstName' then {
-      answer.value as content -> immzc.firstName = content "SetFirstName";
-    } "FirstAnswerForFirstName";
-
-    item.answer first as answer where item.linkId = 'surname' then {
-     answer.value as content -> immzc.surname = content "SetSurname";
-    } "FirstAnswerForSurname";
+      } "FirstAnswerForFullName";
+    }
+    else if (name == pFirstName)
+    {
+      item.answer first as answer where item.linkId = 'firstName' then {
+        answer.value as content -> immzc.firstName = content "SetFirstName";
+      } "FirstAnswerForFirstName";
+    }
+    else
+    {
+      item.answer first as answer where item.linkId = 'surname' then {
+      answer.value as content -> immzc.surname = content "SetSurname";
+      } "FirstAnswerForSurname";
+    }
 
   } "processNameItems";
 }
