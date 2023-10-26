@@ -13,19 +13,17 @@ Description:  "Data elements for the IMMZ.C Register Client Data Dictionary."
 
 * uniqueId 1..1 SU string "Unique identifier" "Unique identifier for the client, according to the policies applicable to each country. There can be more than one unique identifier used to link records (e.g. national ID, health ID, immunization information system ID, medical record ID)."
   * ^code[+] = IMMZ.C#DE1
-//  * ^code[WHOCommon] = IMMZ.C#DE1
-/** name 1..1 string "Name" "The full name of the client"
-  * obeys IMMZ-C-name-1
-  * ^code[+] = IMMZ.C#DE2*/
 * firstName 0..1 string "First name" "Client's first name or given name"
   * obeys IMMZ-C-name-1
-  * ^code[+] = IMMZ.C#DE3
+  * ^code[+] = IMMZ.C#DE2
 * surname 0..1 string "Last name" "Client's family name or last name"
   * obeys IMMZ-C-name-1
   * ^code[+] = IMMZ.C#DE4
 * sex 1..1 code "Sex" "Documentation of a specific instance of sex information for the client"
   * ^code[+] = IMMZ.C#DE5
 * sex from IMMZ.C.DE5 (required)
+* address 0..* string "Addresss" "Client's address"
+  * ^code[+] = IMMZ.C#DE21
 * birthDate 0..1 date "Date of birth" "Client's date of birth (DOB) if known; if unknown, use assigned DOB for administrative purposes"
   * ^code[+] = IMMZ.C#DE10
 * caregiver 0..* BackboneElement "Caregiver" "The client's caregiver (person) which could be next of kin (e.g. partner, husband, mother, sibling, etc.)"
