@@ -13,16 +13,12 @@ Description:  "Data elements for the IMMZ.C Register Client Data Dictionary."
 
 * uniqueId 1..1 SU string "Unique identifier" "Unique identifier for the client, according to the policies applicable to each country. There can be more than one unique identifier used to link records (e.g. national ID, health ID, immunization information system ID, medical record ID)."
   * ^code[+] = IMMZ.C#DE1
-//  * ^code[WHOCommon] = IMMZ.C#DE1
-/** name 1..1 string "Name" "The full name of the client"
+* firstName 0..1 string "First name" "Client's first name or given name"
   * obeys IMMZ-C-name-1
-  * ^code[+] = IMMZ.C#DE2*/
-// * firstName 0..1 string "First name" "Client's first name or given name"
-//   * obeys IMMZ-C-name-1
-//   * ^code[+] = IMMZ.C#DE3
-// * familyName 0..1 string "Last name" "Client's family name or last name"
-//   * obeys IMMZ-C-name-1
-//   * ^code[+] = IMMZ.C#DE4
+  * ^code[+] = IMMZ.C#DE3
+* surname 0..1 string "Last name" "Client's family name or last name"
+  * obeys IMMZ-C-name-1
+  * ^code[+] = IMMZ.C#DE4
 * sex 1..1 code "Sex" "Documentation of a specific instance of sex information for the client"
   * ^code[+] = IMMZ.C#DE5
 * sex from IMMZ.C.DE5 (required)
@@ -49,19 +45,20 @@ Description:  "Data elements for the IMMZ.C Register Client Data Dictionary."
   * ^code[+] = IMMZ.C#DE20*/
   
 
-// Mapping:      IMMZ-C-to-Patient
-// Source:       IMMZCRegisterClient
-// Target:       "Patient"
-// * -> "Patient"
-// * uniqueId -> "Patient.identifier.value"
-// * name -> "Patient.name.text"
-// * firstName -> "Patient.name.given"
-// * familyName -> "Patient.name.family"
-// * sex -> "Patient.gender"
-// * birthDate -> "Patient.birthDate"
-// * caregiver -> "Patient.contact"
-// * caregiver.name -> "Patient.contact.name.text"
-// * caregiver.firstName -> "Patient.contact.name.given"
-// * caregiver.familyName -> "Patient.contact.name.family"
-// * phone -> "Patient.telecom.value"
-// * administrativeArea -> "Patient.address.text"
+Mapping: IMMZ-C-to-Patient
+Source: IMMZCRegisterClient
+Target: "Patient"
+* -> "Patient"
+* uniqueId -> "Patient.identifier.value"
+//* name -> "Patient.name.text"
+* firstName -> "Patient.name.given"
+* surname -> "Patient.name.family"
+* sex -> "Patient.gender"
+* address -> "Patient.address"
+* birthDate -> "Patient.birthDate"
+* caregiver -> "Patient.contact"
+* caregiver.name -> "Patient.contact.name.text"
+* caregiver.firstName -> "Patient.contact.name.given"
+* caregiver.surname -> "Patient.contact.name.family"
+* phone -> "Patient.telecom.value"
+//* administrativeArea -> "Patient.address.text"
